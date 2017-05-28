@@ -1,0 +1,7 @@
+{
+  "name": "plahhhh",
+  "description": "Planning Poker",
+  "repository": "https://github.com/mugi-uno/plahhhh",
+  "logo": "https://raw.githubusercontent.com/mugi-uno/plahhhh/master/public/favicon.ico",
+  "keywords": ["planning poker", "node", "express", "vue", "vuex", "websocket"]
+}
