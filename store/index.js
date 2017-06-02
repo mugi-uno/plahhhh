@@ -1,6 +1,7 @@
 const Immutable = require('immutable');
 const sha512 = require('sha512');
 const uuid = require('uuid/v4');
+const _ = require('lodash');
 
 let state = Immutable.fromJS({});
 
@@ -22,6 +23,33 @@ class Room extends Immutable.Record({
     return this.update('players', players =>
       players.map(p => p.delete('token'))
     );
+  }
+
+  average () {
+    const points = this.get('players').reduce((arr, player) => {
+      const p = player.point;
+      if (p >= 0 && p <= 100) {
+        arr.push(p);
+      }
+      return arr;
+    }, []);
+
+    if (!points.length) return 0;
+
+    const sum = points.reduce((a, b) => a + b, 0);
+    return _.round(sum / points.length, 3);
+  }
+
+  result () {
+    const first = this.get('players').first();
+    const p = first.point;
+
+    if (!(p >= 0 && p <= 100)) return '';
+
+    // 異なるポイントの要素があったら非合意
+    const difference = this.get('players').find(player => player.point !== p);
+
+    return difference ? '' : 'consensus';
   }
 }
 
@@ -102,11 +130,7 @@ const actions = {
   openGame: (roomName) => {
     console.log(`open game >>> [${roomName}]`);
 
-    // ゲームを初期状態に更新する
-    const room = state.get(roomName)
-      .set('status', GameStatus.open)
-      .set('average', 999)
-      .set('result', 'CONSENSUS');
+    const room = state.get(roomName).set('status', GameStatus.open);
 
     state = state.set(roomName, room);
 
@@ -121,7 +145,12 @@ const actions = {
           if (p.get('id') !== playerId) return p;
           return p.set('point', point);
         })
-      );
+      )
+      .update(v => {
+        return v
+        .set('average', v.average())
+        .set('result', v.result());
+      });
 
     state = state.set(roomName, room);
 
