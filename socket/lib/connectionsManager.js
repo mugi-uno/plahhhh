@@ -14,14 +14,18 @@ const connectionsManager = () => {
     });
   };
 
-  const publishUpdate = (room, excludePlayerId) => {
+  const publish = (type, room, excludePlayerId) => {
     // ルーム全体に更新を通知
     eachRoom(room, (con) => {
       send(con, {
-        type: 'update',
+        type,
         room: room.toJS()
       });
     }, excludePlayerId);
+  };
+
+  const publishUpdate = (...params) => {
+    publish('update', ...params);
   };
 
   return {
