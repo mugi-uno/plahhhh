@@ -34,6 +34,15 @@
       | {{room.average}}
       span.point-suffix
         | pt
+  .average(
+    v-if='isOpen && !isConsensus'
+  )
+    span.prefix
+      | average
+    span.point
+      | {{room.average}}
+    span.point-suffix
+      | pt
 </template>
 
 <script>
@@ -129,5 +138,19 @@ export default {
   font-size: 6rem;
   margin-top: 117px;
   margin-right: -100px;
+}
+
+.average {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.average .point {
+  margin-left: 5px;
+  font-weight: bold;
+  margin-right: 2px;
 }
  </style>
