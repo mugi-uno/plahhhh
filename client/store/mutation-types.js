@@ -2,6 +2,7 @@ export const ROOM_INITIALIZE = 'ROOM_INITIALIZE';
 export const ROOM_LOAD = 'ROOM_LOAD';
 export const ROOM_JOIN_REQ = 'ROOM_JOIN_REQ';
 export const ROOM_JOIN_RES = 'ROOM_JOIN_RES';
+export const ROOM_GAME_START = 'ROOM_GAME_START';
 export const ROOM_GAME_START_REQ = 'ROOM_GAME_START_REQ';
 export const ROOM_GAME_OPEN_REQ = 'ROOM_GAME_OPEN_REQ';
 

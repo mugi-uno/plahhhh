@@ -26,7 +26,7 @@ const onMessages = {
   },
 
   leave: ({ room, id }) => cm.publishUpdate(store.leave(room, id), id),
-  start: ({ room }) => cm.publishUpdate(store.startGame(room)),
+  start: ({ room }) => cm.publish('start', store.startGame(room)),
   open: ({ room }) => cm.publishUpdate(store.openGame(room)),
   pointSelect: ({ point }, con) => cm.publishUpdate(store.pointSelect(con.room, con.id, point)),
 };

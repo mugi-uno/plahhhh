@@ -74,6 +74,11 @@ const mutations = {
     state.joining = true;
   },
 
+  [types.ROOM_GAME_START]: (state, { room }) => {
+    mutations[types.ROOM_UPDATE](state, { room });
+    state.myself.point = null;
+  },
+
   [types.ROOM_UPDATE]: (state, { room }) => {
     return Object.assign(state, room);
   },

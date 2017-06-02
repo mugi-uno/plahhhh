@@ -32,6 +32,7 @@ const connectionsManager = () => {
     cons: () => cons,
     send,
     eachRoom,
+    publish,
     publishUpdate,
     push: (con) => cons.push(con),
     close: (ws) => {

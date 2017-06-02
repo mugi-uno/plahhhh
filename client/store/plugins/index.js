@@ -7,6 +7,9 @@ const createOnMessageHandler = (store) => (data) => {
     join (data) {
       store.commit(type(types.ROOM_JOIN_RES), { room: data.room, player: data.player });
     },
+    start (data) {
+      store.commit(type(types.ROOM_GAME_START), { room: data.room });
+    },
     update (data) {
       store.commit(type(types.ROOM_UPDATE), { room: data.room });
     },
