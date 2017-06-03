@@ -17,7 +17,9 @@ class Room extends Immutable.Record({
   players: new Immutable.List(),
   status: GameStatus.start,
   result: '',
-  average: 0,
+  average: null,
+  min: null,
+  max: null,
 }) {
   mask () {
     return this.update('players', players =>
@@ -25,16 +27,30 @@ class Room extends Immutable.Record({
     );
   }
 
-  average () {
-    const points = this.get('players').reduce((arr, player) => {
+  validPoints () {
+    return this.get('players').reduce((arr, player) => {
       const p = player.point;
       if (_.isNumber(p) && p >= 0 && p <= 100) {
         arr.push(p);
       }
       return arr;
     }, []);
+  }
 
-    if (!points.length) return 0;
+  min () {
+    const value = _.min(this.validPoints());
+    return _.isNumber(value) ? value : null;
+  }
+
+  max () {
+    const value = _.max(this.validPoints());
+    return _.isNumber(value) ? value : null;
+  }
+
+  average () {
+    const points = this.validPoints();
+
+    if (!points.length) return null;
 
     const sum = points.reduce((a, b) => a + b, 0);
     return _.round(sum / points.length, 3);
@@ -149,6 +165,8 @@ const actions = {
       .update(v => {
         return v
         .set('average', v.average())
+        .set('min', v.min())
+        .set('max', v.max())
         .set('result', v.result());
       });
 
