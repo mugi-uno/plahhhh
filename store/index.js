@@ -28,7 +28,7 @@ class Room extends Immutable.Record({
   average () {
     const points = this.get('players').reduce((arr, player) => {
       const p = player.point;
-      if (Number.isInteger(p) && p >= 0 && p <= 100) {
+      if (_.isNumber(p) && p >= 0 && p <= 100) {
         arr.push(p);
       }
       return arr;
@@ -44,7 +44,7 @@ class Room extends Immutable.Record({
     const first = this.get('players').first();
     const p = first.point;
 
-    if (!(Number.isInteger(p) && p >= 0 && p <= 100)) return '';
+    if (!(_.isNumber(p) && p >= 0 && p <= 100)) return '';
 
     // 異なるポイントの要素があったら非合意
     const difference = this.get('players').find(player => player.point !== p);
