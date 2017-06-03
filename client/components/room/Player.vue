@@ -33,12 +33,16 @@
       | {{name}}
     .point
       v-chip.primary.primary--text(outline) {{pointLabel}}
+      span.status(v-if='isMin').min
+        i.material-icons vertical_align_bottom
+      span.status(v-if='isMax').max
+        i.material-icons vertical_align_top
 </template>
 
 <script>
 export default {
   name: 'Player',
-  props: ['id', 'name', 'point', 'isMyself', 'isOpen'],
+  props: ['id', 'name', 'point', 'isMyself', 'isOpen', 'isConsensus', 'max', 'min'],
   computed: {
     isHalf ()  {
       return this.$props.point === 0.5;
@@ -58,6 +62,15 @@ export default {
       if (this.selectedInfinity) return '∞';
       if (this.$props.point === 0 || this.$props.point) return `${this.$props.point} pt`; 
       return '...';
+    },
+    viewStatus() {
+      return this.$props.isOpen && !this.$props.isConsensus;
+    },
+    isMax() {
+      return this.viewStatus && this.$props.point === this.$props.max;
+    },
+    isMin() {
+      return this.viewStatus && this.$props.point === this.$props.min;
     }
   }
 }
@@ -97,6 +110,25 @@ export default {
 
 .point {
   font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.point .status {
+  margin-left: -7px;
+  margin-bottom: -7px;
+}
+
+.point .status i {
+  font-size: 2rem;
+}
+
+.point .status.max i {
+  color: #d21919 !important
+}
+
+.point .status.min i {
+  color: #1976d2 !important
 }
 
 .human {

@@ -25,6 +25,9 @@
   players(
     v-bind:players='players'
     v-bind:isOpen='isOpen'
+    v-bind:isConsensus='isConsensus'
+    v-bind:max='room.max'
+    v-bind:min='room.min'
   )
 
   .consensus(
@@ -39,30 +42,34 @@
   .result(
     v-if='isOpen && !isConsensus'
   )
-    span.min
-      span.prefix
+    .min.flex
+      .prefix
+        .prefix_icon
+          i.material-icons vertical_align_bottom
         | min
-      span.point
+      .point
         | {{room.min === null ? '-' : room.min}}
-      span.point-suffix
+      .point-suffix
         | pt
-    span.separator
+    .separator
       | /
-    span.max
-      span.prefix
+    .max.flex
+      .prefix
+        .prefix_icon
+          i.material-icons vertical_align_top
         | max
-      span.point
+      .point
         | {{room.max === null ? '-' : room.max}}
-      span.point-suffix
+      .point-suffix
         | pt
-    span.separator
+    .separator
       | /
-    span.average
-      span.prefix
+    .average.flex
+      .prefix
         | average
-      span.point
+      .point
         | {{room.average === null ? '-' : room.average}}
-      span.point-suffix
+      .point-suffix
         | pt
 </template>
 
@@ -133,7 +140,7 @@ export default {
 .open.ready button {
   background: linear-gradient(262deg, #dde657, #48ce59, #19d0d2, #1976d2);
   background-size: 1000% 1000%;
-  animation: AnimationName 20s ease infinite;
+  animation: AnimationName 15s ease infinite;
 }
 
 .consensus {
@@ -147,7 +154,7 @@ export default {
 }
 
 .consensus .text {
-  background-color: hsla(20, 80%, 65%, 0.75);
+  background-color: hsla(153, 80%, 65%, 0.75);
   color: white;
   display: flex;
   font-size: 6rem;
@@ -166,7 +173,7 @@ export default {
   font-weight: bold;
   align-items: center;
   height: 280px;
-  background-color: hsla(20, 80%, 95%, 0.75);
+  background-color: hsla(153, 80%, 97%, 0.75);
 }
 
 .consensus .point-suffix {
@@ -178,8 +185,8 @@ export default {
 
 .separator {
   opacity: 0.5;
-  margin-left: 8px;
-  margin-right: 8px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .result {
@@ -190,9 +197,27 @@ export default {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+.flex {
+  display: flex;
+}
+
+.prefix {
+  display: flex;
+}
+
 .result .point {
   margin-left: 5px;
   font-weight: bold;
   margin-right: 2px;
+}
+
+.prefix_icon {
+  position: relative;
+  top: 3px;
+}
+
+.prefix_icon i {
+  font-size: 1.25rem;
+  opacity: 0.8;
 }
  </style>

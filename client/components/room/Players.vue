@@ -6,6 +6,9 @@
     v-bind:name='player.name'
     v-bind:isMyself='player.isMyself'
     v-bind:isOpen='$props.isOpen'
+    v-bind:isConsensus='$props.isConsensus'
+    v-bind:min='$props.min'
+    v-bind:max='$props.max'
     v-bind:point='player.point'
     v-bind:key='player.id'
   )
@@ -19,7 +22,7 @@ export default {
   components: {
     Player,
   },
-  props: ['players', 'isOpen']
+  props: ['players', 'isOpen', 'isConsensus', 'max', 'min']
 }
 </script>
 
