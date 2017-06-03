@@ -34,15 +34,34 @@
       | {{room.average}}
       span.point-suffix
         | pt
-  .average(
+  .result(
     v-if='isOpen && !isConsensus'
   )
-    span.prefix
-      | average
-    span.point
-      | {{room.average}}
-    span.point-suffix
-      | pt
+    span.min
+      span.prefix
+        | min
+      span.point
+        | {{room.min === null ? '-' : room.min}}
+      span.point-suffix
+        | pt
+    span.separator
+      | /
+    span.max
+      span.prefix
+        | max
+      span.point
+        | {{room.max === null ? '-' : room.max}}
+      span.point-suffix
+        | pt
+    span.separator
+      | /
+    span.average
+      span.prefix
+        | average
+      span.point
+        | {{room.average === null ? '-' : room.average}}
+      span.point-suffix
+        | pt
 </template>
 
 <script>
@@ -140,7 +159,13 @@ export default {
   margin-right: -100px;
 }
 
-.average {
+.separator {
+  opacity: 0.5;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.result {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,7 +173,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.02);
 }
 
-.average .point {
+.result .point {
   margin-left: 5px;
   font-weight: bold;
   margin-right: 2px;

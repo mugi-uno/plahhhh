@@ -16,7 +16,9 @@ const defaultState = {
   joining: false,
   status: 'thinking',
   result: '',
-  average: 0,
+  average: null,
+  min: null,
+  max: null
 };
 
 const state = { ...defaultState };
