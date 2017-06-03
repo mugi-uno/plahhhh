@@ -8,7 +8,9 @@
           @click.native='$emit("start")'
         )
           | CLEAR
-      .open
+      .open(
+        v-bind:class='{"ready": ready && !isOpen}'
+      )
         v-btn.primary(
           dark round
           @click.native='$emit("open")'
@@ -85,6 +87,9 @@ export default {
       const others = players.filter(p => p.id !== room.myself.id);
       return [Object.assign({isMyself: true}, myself), ...others];
     },
+    ready () {
+      return this.players.find(p => p.point === null) ? false : true;
+    },
     isOpen () {
       return this.$props.room.status === "open";
     },
@@ -117,6 +122,18 @@ export default {
 
 .playButton button {
   width: 200px;
+}
+
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.open.ready button {
+  background: linear-gradient(262deg, #dde657, #48ce59, #19d0d2, #1976d2);
+  background-size: 1000% 1000%;
+  animation: AnimationName 20s ease infinite;
 }
 
 .consensus {
